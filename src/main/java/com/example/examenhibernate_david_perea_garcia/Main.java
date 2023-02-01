@@ -30,7 +30,7 @@ public class Main {
             Conexiones.setUp();
             session = Conexiones.abrirSesion();
 
-
+            guardarPersona();
 
 
             Conexiones.cerrarSesion();
@@ -49,22 +49,22 @@ public class Main {
      * Se pide como parámetro los datos de la persona que se va a insertar, esos datos se meten en el constructor
      * del objeto tipo PlayerEntidad. Una vez que se crea el objeto con los datos introducidos, se crea una
      * transacción y se guarda la persona.
-     * @param nick
-     * @param password
-     * @param email
-     *//*
-    private static void guardarPersona(String nick, String password, String email ) {
+     */
+    private static void guardarPersona() {
 
 
-        PlayerEntity persona = new PlayerEntity(nick, password, email);
+        VQ_Naves persona = new VQ_Naves("Prueba","aqui");
       Conexiones.abrirTransaccion();
+        try{
+            int id = (int) session.save(persona);
+            Conexiones.commitTransaccion();
+        }catch (Exception e){
+            Conexiones.rollBackTransaccion();
+        }
 
-        int id = (int) session.save(persona);
-      Conexiones.commitTransaccion();
-        System.out.println(id);
 
     }
-*/
+
     /**
      * Método que requiere un int como parámetro que será el id de la persona que se desea eliminar. Se crea un
      * objeto de tipo PlaterEntidad y se recoge la persona con el id que es pasado por parámetro, luego se borra
