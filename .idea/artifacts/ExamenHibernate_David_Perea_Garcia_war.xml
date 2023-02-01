@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ExamenHibernate_David_Perea_Garcia:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>ExamenHibernate_David_Perea_Garcia</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="ExamenHibernate_David_Perea_Garcia-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="ExamenHibernate_David_Perea_Garcia:war exploded" />
+    </root>
+  </artifact>
+</component>
