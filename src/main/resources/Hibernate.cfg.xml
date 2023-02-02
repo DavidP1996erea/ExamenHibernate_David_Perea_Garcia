@@ -25,6 +25,5 @@
           -->
 
        <mapping class="com.example.examenhibernate_david_perea_garcia.VQ_Naves"></mapping>
-        <mapping class="com.example.examenhibernate_david_perea_garcia.VQ_produccion"></mapping>
     </session-factory>
 </hibernate-configuration>

@@ -3,10 +3,17 @@ package com.example.examenhibernate_david_perea_garcia;
 
 import jakarta.persistence.*;
 
+
+
 @Entity
 @Table(name = "VQ_Naves")
-public class VQ_Naves {
 
+@NamedQueries({
+
+        @NamedQuery(name = "numeroPatoGallinas", query = "select count(a) from VQ_Naves a"),
+        @NamedQuery(name="listaPorUbicacion", query="select a from VQ_Naves a where a.ubicacion LIKE :xd")
+})
+public class VQ_Naves {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

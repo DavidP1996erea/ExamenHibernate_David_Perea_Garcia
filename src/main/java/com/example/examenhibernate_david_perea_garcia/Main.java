@@ -30,7 +30,8 @@ public class Main {
             Conexiones.setUp();
             session = Conexiones.abrirSesion();
 
-            guardarPersona();
+
+
 
 
             Conexiones.cerrarSesion();
@@ -53,7 +54,7 @@ public class Main {
     private static void guardarPersona() {
 
 
-        VQ_Naves persona = new VQ_Naves("Prueba","aqui");
+        VQ_Naves persona = new VQ_Naves("Javier","Seperra");
       Conexiones.abrirTransaccion();
         try{
             int id = (int) session.save(persona);
@@ -70,18 +71,18 @@ public class Main {
      * objeto de tipo PlaterEntidad y se recoge la persona con el id que es pasado por parámetro, luego se borra
      * a esa persona.
      * @param id
-     *//*
+     */
     private static void eliminarPersona(int id){
 
         Conexiones.abrirTransaccion();
         // Recoge una persona con el id
-        PlayerEntity persona = session.get(PlayerEntity.class, id);
+        VQ_Naves persona = session.get(VQ_Naves.class, id);
         // Se borra esa persona
         session.delete(persona);
         Conexiones.commitTransaccion();
 
     }
-*/
+
 
     /**
      * Este método requiere un int como parámetro, que será el id de una persona que se desea modificar. Al igual
@@ -144,7 +145,7 @@ public class Main {
 
         /* Ejemplo NamedQuery*/
       //  List<tProfesoresHQL> lista = listarNamedQueries("listaProfesores");
-        List<String> lista = listarNamedQueries("listaProfesores");
+      //  List<String> lista = listarNamedQueries("listaProfesores");
 
         /* Ejemplo select nombre en NamedQuery
             List <tAlumnosHQL> lista = listarNamedQueries("listaNombreAlumnos");
@@ -155,19 +156,22 @@ public class Main {
          */
 
         /* Listado usando un parámetro, primero se le pasa el nombre de la NamedQuery, luego el nombre
-        del parámetro puesto en la clase, en este caso apellido,y por último será el valora buscar
+        del parámetro puesto en la clase, en este caso apellido y, por último será el valora buscar
+ */
+        List <VQ_Naves> lista = listarConParametro("listaPorUbicacion","xd","Sequerra");
 
-        List <tAlumnosHQL> lista = listarConParametro("listaAlumnosPorApellido","apellido","Muletas");
-          */
         /* Ejemplo de namedQuert que devuelve un unique valor
         List <tAlumnosHQL> lista = listarNamedQueries("numeroAlumnado");
            System.out.println( resultado("numeroAlumnado"));
         */
 
-        for(int i =0; i< lista.size();i++){
 
-           // System.out.println( lista.get(i));
+        for(int i=0;i< lista.size();i++){
+
+            System.out.println(lista.get(i).getGanadero() + " " + lista.get(i).getUbicacion());
         }
+
+      //  System.out.println(resultado("numeroPatoGallinas"));
     }
 
 
@@ -208,10 +212,10 @@ public class Main {
      */
     public static long resultado(String namedQuery) {
 
-        Query lista = session.getNamedQuery(namedQuery);
+        Query consulta = session.getNamedQuery(namedQuery);
 
         // Para el uso del uniqueResult se importa import org.hibernate.query.Query;
-        return (long)lista.uniqueResult();
+        return (long)consulta.uniqueResult();
     }
 
 
@@ -219,50 +223,40 @@ public class Main {
      * Esto va en la clase
      *
      * @NamedQueries({
-     *         @NamedQuery(name="listaAlumnos", query="from tAlumnosHQL "),
+     *         @NamedQuery(name="listaAlumnos", query="from tAlumnosHQL"),
      *         @NamedQuery(name="listaNombreAlumnos", query="select a.nombre from tAlumnosHQL a"),
      *         @NamedQuery(name="listaAlumnosPorApellido", query="select a from tAlumnosHQL a where a.apellido1 LIKE :apellido"),
      *         @NamedQuery(name = "numeroAlumnado", query = "select count(a) from tAlumnosHQL a")
+     *         @NamedQuery(
+     *              name = "alumnadoMatriculado",
+     *              query = "select m from AlumnadoEntity a JOIN a.listaAlumnadoMatricula m JOIN m.asignatura asig"
+     * )
      */
 
 
-    /**
-     * Método para posible lectura
-     */
-
-/*
-    public static void leerFicheros(){
-
-        BufferedReader br = null;
-
-        try {
-
-            br = new BufferedReader(new FileReader("C:\\Users\\david\\IdeaProjects\\ExamenHibernate_David_Perea_Garcia\\src\\VQ_Naves.txt"));
-            Scanner sc = new Scanner(br);
-            String lineasInsertar="";
-            while (sc.hasNext()){
-                lineasInsertar=sc.nextLine();
-
-
-                Query query =  session.createNativeQuery(lineasInsertar);
-
-                query.executeUpdate();
-            }
-
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+/**
+ * Para insertar en dos cosas
+ *
+ * private static void asociarProfesorDpto(){
+ *         int id = 1;
+ *         Session session = conexion.ObtenerSesion();
+ *         Transaction transaction = session.beginTransaction();
+ *         tDpto dpto = session.load(tDpto.class, id);
+ *         tProfesores profesor2 = new tProfesores("Carmen", "Martin", "Gaite");
+ *         profesor2.setDpto(dpto);
+ *         transaction.commit();
+ *         session.close();
+ *         insertarObjeto(profesor2);
+ *     }
+ */
 
 
-        }finally {
-            try {
-                br.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-*/
-
-
+/**
+ * @OneToMany(cascade=CascadeType.ALL)
+ *     @JoinColumn(name = "idAlumnado")
+ *     private List<MatriculaEntidad> matriculaEntidad;
+ * @ManyToOne
+ *     @JoinColumn(name="idProfesorado")
+ *     private ProfesorEntidad Profesorado;
+ */
 }
